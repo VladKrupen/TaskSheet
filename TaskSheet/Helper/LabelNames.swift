@@ -10,4 +10,5 @@ import Foundation
 struct LabelNames {
     static let tasksForTitle: String = "Задачи"
     static let tasksForFooter: String = "Задач"
+    static let back: String = "Назад"
 }

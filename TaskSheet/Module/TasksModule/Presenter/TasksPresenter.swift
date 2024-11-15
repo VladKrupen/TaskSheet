@@ -8,7 +8,7 @@
 import Foundation
 
 protocol TasksPresenterProtocol: AnyObject {
-    
+    func createTaskButtonWasPressed(action: TasksModuleActions, task: Task?)
 }
 
 final class TasksPresenter: TasksPresenterProtocol {
@@ -21,5 +21,9 @@ final class TasksPresenter: TasksPresenterProtocol {
         self.view = view
         self.interactor = interactor
         self.router = router
+    }
+    
+    func createTaskButtonWasPressed(action: TasksModuleActions, task: Task?) {
+        router.showTaskPageModule(action: action, task: task)
     }
 }

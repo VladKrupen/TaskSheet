@@ -24,10 +24,14 @@ final class TasksViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationController()
         setDelegate()
         addTargets()
         contentView.setTaskCounter(counter: 100)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationController()
     }
     
     //MARK: Setup
@@ -81,7 +85,7 @@ extension TasksViewController {
     }
     
     @objc private func createTaskButtonTapped() {
-        
+        presenter?.createTaskButtonWasPressed(action: .createTaskButton, task: nil)
     }
 }
 

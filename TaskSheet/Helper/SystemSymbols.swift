@@ -14,4 +14,5 @@ struct SystemSymbols {
     static let squareAndPencil: String = "square.and.pencil"
     static let circle: String = "circle"
     static let checkmarkCircle: String = "checkmark.circle"
+    static let chevronLeft: String = "chevron.left"
 }
