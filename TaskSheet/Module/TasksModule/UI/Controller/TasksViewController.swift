@@ -27,6 +27,7 @@ final class TasksViewController: UIViewController {
         setupNavigationController()
         setDelegate()
         addTargets()
+        contentView.setTaskCounter(counter: 100)
     }
     
     //MARK: Setup
@@ -37,12 +38,15 @@ final class TasksViewController: UIViewController {
     //MARK: Delegate
     private func setDelegate() {
         contentView.searchField.delegate = self
+        contentView.taskTableView.dataSource = self
+        contentView.taskTableView.delegate = self
     }
     
     //MARK: Target
     private func addTargets() {
         addTargetForImageInSearchField()
         addTargetForContentView()
+        addTargetForCreateTaskButton()
     }
     
     private func addTargetForImageInSearchField() {
@@ -51,6 +55,10 @@ final class TasksViewController: UIViewController {
     
     private func addTargetForContentView() {
         contentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(contentViewTapped)))
+    }
+    
+    private func addTargetForCreateTaskButton() {
+        contentView.createTaskButton.addTarget(self, action: #selector(createTaskButtonTapped), for: .touchUpInside)
     }
 }
 
@@ -71,6 +79,10 @@ extension TasksViewController {
     @objc private func contentViewTapped() {
         contentView.endEditing(true)
     }
+    
+    @objc private func createTaskButtonTapped() {
+        
+    }
 }
 
 //MARK: UITextFieldDelegate
@@ -84,4 +96,30 @@ extension TasksViewController: UITextFieldDelegate {
         contentView.endEditing(true)
         return true
     }
+}
+
+//MARK: UITableViewDataSource
+extension TasksViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: TaskTableViewCell.self),
+                                                       for: indexPath) as? TaskTableViewCell else {
+            return UITableViewCell()
+        }
+        cell.selectionStyle = .none
+        let task = Task(id: "adsdsd", title: "Почитать книгу", description: "Составить список необходимых продуктов для ужина. Не забыть проверить, что уже есть в холодильнике.", completed: true, date: Date())
+        cell.configureCell(task: task)
+        cell.checkmarkImageViewAction = {
+            cell.isCompleted?.toggle()
+        }
+        return cell
+    }
+}
+
+//MARK: UITableViewDelegate
+extension TasksViewController: UITableViewDelegate {
+    
 }

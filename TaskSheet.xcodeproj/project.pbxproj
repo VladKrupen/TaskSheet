@@ -23,6 +23,8 @@
 		01FA00362CE67978006DE88F /* Placeholders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FA00352CE67978006DE88F /* Placeholders.swift */; };
 		01FA00392CE67BED006DE88F /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FA00382CE67BED006DE88F /* SearchField.swift */; };
 		01FA003B2CE67D29006DE88F /* SystemSymbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FA003A2CE67D29006DE88F /* SystemSymbols.swift */; };
+		01FCBFF42CE750D300B60AAB /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FCBFF32CE750D300B60AAB /* TaskTableViewCell.swift */; };
+		01FCBFF72CE76DC400B60AAB /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FCBFF62CE76DC400B60AAB /* Task.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,8 @@
 		01FA00382CE67BED006DE88F /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		01FA003A2CE67D29006DE88F /* SystemSymbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemSymbols.swift; sourceTree = "<group>"; };
 		01FAFFED2CE6671D006DE88F /* TaskSheet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaskSheet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		01FCBFF32CE750D300B60AAB /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
+		01FCBFF62CE76DC400B60AAB /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				01FA00162CE66764006DE88F /* Application */,
+				01FCBFF52CE76D9F00B60AAB /* Entity */,
 				01FA00302CE66FBA006DE88F /* Extensions */,
 				01FA00202CE66B14006DE88F /* Factory */,
 				01FA002D2CE66F83006DE88F /* Helper */,
@@ -114,6 +119,7 @@
 			children = (
 				01FA001B2CE66AB1006DE88F /* Controller */,
 				01FA001C2CE66AB6006DE88F /* View */,
+				01FCBFF22CE7508D00B60AAB /* Cell */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -209,6 +215,22 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		01FCBFF22CE7508D00B60AAB /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				01FCBFF32CE750D300B60AAB /* TaskTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		01FCBFF52CE76D9F00B60AAB /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				01FCBFF62CE76DC400B60AAB /* Task.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -284,11 +306,13 @@
 			files = (
 				01FA000F2CE66725006DE88F /* AppDelegate.swift in Sources */,
 				01FA002F2CE66F97006DE88F /* Colors.swift in Sources */,
+				01FCBFF42CE750D300B60AAB /* TaskTableViewCell.swift in Sources */,
 				01FA00242CE66B62006DE88F /* TasksViewController.swift in Sources */,
 				01FA00222CE66B26006DE88F /* ModuleFactory.swift in Sources */,
 				01FA002C2CE66D1A006DE88F /* TasksRouter.swift in Sources */,
 				01FA002A2CE66CEA006DE88F /* TasksInteractor.swift in Sources */,
 				01FA00282CE66C05006DE88F /* TasksPresenter.swift in Sources */,
+				01FCBFF72CE76DC400B60AAB /* Task.swift in Sources */,
 				01FA00102CE66725006DE88F /* SceneDelegate.swift in Sources */,
 				01FA003B2CE67D29006DE88F /* SystemSymbols.swift in Sources */,
 				01FA00342CE672C7006DE88F /* LabelNames.swift in Sources */,

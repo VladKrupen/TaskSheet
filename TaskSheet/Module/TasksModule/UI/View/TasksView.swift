@@ -14,7 +14,7 @@ final class TasksView: UIView {
         $0.textColor = UIColor(hex: Colors.white)
         $0.numberOfLines = 1
         $0.font = UIFont.systemFont(ofSize: 34, weight: .bold)
-        $0.text = LabelNames.tasks
+        $0.text = LabelNames.tasksForTitle
         return $0
     }(UILabel())
     
@@ -23,6 +23,35 @@ final class TasksView: UIView {
         $0.setPlaceholder(placeholder: Placeholders.search)
         return $0
     }(SearchField())
+    
+    private let footerView: UIView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.backgroundColor = UIColor(hex: Colors.gray)
+        return $0
+    }(UIView())
+    
+    let createTaskButton: UIButton = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.setBackgroundImage(UIImage(systemName: SystemSymbols.squareAndPencil), for: .normal)
+        $0.tintColor = UIColor(hex: Colors.yellow)
+        return $0
+    }(UIButton(type: .system))
+    
+    private let taskCounterLabel: UILabel = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.textColor = UIColor(hex: Colors.white)
+        $0.numberOfLines = 1
+        $0.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+        return $0
+    }(UILabel())
+    
+    let taskTableView: UITableView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.backgroundColor = UIColor(hex: Colors.black)
+        $0.separatorStyle = .none
+        $0.register(TaskTableViewCell.self, forCellReuseIdentifier: String(describing: TaskTableViewCell.self))
+        return $0
+    }(UITableView())
     
     //MARK: Init
     override init(frame: CGRect) {
@@ -35,10 +64,19 @@ final class TasksView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: Configure
+    func setTaskCounter(counter: Int) {
+        taskCounterLabel.text = "\(counter) \(LabelNames.tasksForFooter)"
+    }
+    
     //MARK: Layout
     private func layoutElements() {
         layoutTitleLabel()
         layoutSearchBar()
+        layoutFooterView()
+        layoutCreateTaskButton()
+        layoutTaskCounterLabel()
+        layoutTableView()
     }
     
     private func layoutTitleLabel() {
@@ -59,6 +97,50 @@ final class TasksView: UIView {
             searchField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
             searchField.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
             searchField.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -20)
+        ])
+    }
+    
+    private func layoutFooterView() {
+        addSubview(footerView)
+        
+        NSLayoutConstraint.activate([
+            footerView.heightAnchor.constraint(equalToConstant: 83),
+            footerView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            footerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            footerView.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
+    }
+    
+    private func layoutCreateTaskButton() {
+        footerView.addSubview(createTaskButton)
+        
+        NSLayoutConstraint.activate([
+            createTaskButton.widthAnchor.constraint(equalToConstant: 28),
+            createTaskButton.heightAnchor.constraint(equalToConstant: 28),
+            createTaskButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 15),
+            createTaskButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -20),
+        ])
+    }
+    
+    private func layoutTaskCounterLabel() {
+        footerView.addSubview(taskCounterLabel)
+        
+        NSLayoutConstraint.activate([
+            taskCounterLabel.centerYAnchor.constraint(equalTo: createTaskButton.centerYAnchor),
+            taskCounterLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            taskCounterLabel.trailingAnchor.constraint(lessThanOrEqualTo: createTaskButton.leadingAnchor, constant: -10),
+            taskCounterLabel.leadingAnchor.constraint(greaterThanOrEqualTo: footerView.leadingAnchor, constant: 20)
+        ])
+    }
+    
+    private func layoutTableView() {
+        addSubview(taskTableView)
+        
+        NSLayoutConstraint.activate([
+            taskTableView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 10),
+            taskTableView.bottomAnchor.constraint(equalTo: footerView.topAnchor),
+            taskTableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            taskTableView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
 }

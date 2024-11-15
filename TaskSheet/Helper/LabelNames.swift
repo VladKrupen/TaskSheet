@@ -8,5 +8,6 @@
 import Foundation
 
 struct LabelNames {
-    static let tasks: String = "Задачи"
+    static let tasksForTitle: String = "Задачи"
+    static let tasksForFooter: String = "Задач"
 }
