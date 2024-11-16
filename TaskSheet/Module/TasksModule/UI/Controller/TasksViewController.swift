@@ -13,6 +13,8 @@ protocol TasksViewProtocol: AnyObject {
 
 final class TasksViewController: UIViewController {
     
+    private var tasks: [Task] = []
+    
     var presenter: TasksPresenterProtocol?
     private let contentView = TasksView()
     
@@ -26,7 +28,7 @@ final class TasksViewController: UIViewController {
         super.viewDidLoad()
         setDelegate()
         addTargets()
-        contentView.setTaskCounter(counter: 100)
+        presenter?.viewDidLoaded()
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -9,6 +9,7 @@ import Foundation
 
 protocol TasksPresenterProtocol: AnyObject {
     func createTaskButtonWasPressed(action: TasksModuleActions, task: Task?)
+    func viewDidLoaded()
 }
 
 final class TasksPresenter: TasksPresenterProtocol {
@@ -25,5 +26,9 @@ final class TasksPresenter: TasksPresenterProtocol {
     
     func createTaskButtonWasPressed(action: TasksModuleActions, task: Task?) {
         router.showTaskPageModule(action: action, task: task)
+    }
+    
+    func viewDidLoaded() {
+        interactor.fetchTasks()
     }
 }
