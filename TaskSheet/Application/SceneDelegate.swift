@@ -19,5 +19,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.overrideUserInterfaceStyle = .light
         self.window = window
     }
+    
+    func sceneDidEnterBackground(_ scene: UIScene) {
+        let coreDataSaving: CoreDataSaving = CoreDataManager()
+        do {
+            try coreDataSaving.saveContext()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 }
 

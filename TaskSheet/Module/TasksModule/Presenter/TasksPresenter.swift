@@ -10,6 +10,8 @@ import Foundation
 protocol TasksPresenterProtocol: AnyObject {
     func createTaskButtonWasPressed(action: TasksModuleActions, task: Task?)
     func viewDidLoaded()
+    func displayError(error: TaskError)
+    func updateView(tasks: [Task])
 }
 
 final class TasksPresenter: TasksPresenterProtocol {
@@ -30,5 +32,13 @@ final class TasksPresenter: TasksPresenterProtocol {
     
     func viewDidLoaded() {
         interactor.fetchTasks()
+    }
+    
+    func displayError(error: TaskError) {
+        view?.showAlert(error: error)
+    }
+    
+    func updateView(tasks: [Task]) {
+        view?.updateView(tasks: tasks)
     }
 }

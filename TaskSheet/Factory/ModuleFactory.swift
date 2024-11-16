@@ -9,10 +9,14 @@ import Foundation
 
 final class ModuleFactory {
     static let networkManager = NetworkManager()
+    static let userDefaultsManager = UserDefaultsManager()
+    static let coreDataManager = CoreDataManager()
     
     static func createTasksModule() -> TasksViewController {
         let tasksViewController = TasksViewController()
-        let tasksInteractor = TasksInteractor(networkManager: networkManager)
+        let tasksInteractor = TasksInteractor(networkManager: networkManager,
+                                              userDefaultsManager: userDefaultsManager,
+                                              coreDataTasks: coreDataManager)
         let tasksRouter = TasksRouter()
         let tasksPresenter = TasksPresenter(view: tasksViewController,
                                             interactor: tasksInteractor,

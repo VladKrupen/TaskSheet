@@ -36,6 +36,9 @@
 		01FCC0192CE8998800B60AAB /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FCC0182CE8998800B60AAB /* NetworkManager.swift */; };
 		01FCC01C2CE8A5D300B60AAB /* TaskError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FCC01B2CE8A5D300B60AAB /* TaskError.swift */; };
 		01FCC01E2CE8A97300B60AAB /* TaskResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FCC01D2CE8A97300B60AAB /* TaskResponse.swift */; };
+		01FCC0202CE8B44500B60AAB /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FCC01F2CE8B44500B60AAB /* UserDefaultsManager.swift */; };
+		01FCC0222CE8B7B600B60AAB /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FCC0212CE8B7B600B60AAB /* CoreDataManager.swift */; };
+		01FCC0282CE8B81C00B60AAB /* TaskSheet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 01FCC0262CE8B81C00B60AAB /* TaskSheet.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +73,9 @@
 		01FCC0182CE8998800B60AAB /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		01FCC01B2CE8A5D300B60AAB /* TaskError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskError.swift; sourceTree = "<group>"; };
 		01FCC01D2CE8A97300B60AAB /* TaskResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskResponse.swift; sourceTree = "<group>"; };
+		01FCC01F2CE8B44500B60AAB /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		01FCC0212CE8B7B600B60AAB /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		01FCC0272CE8B81C00B60AAB /* TaskSheet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TaskSheet.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +262,7 @@
 			children = (
 				01FCBFF62CE76DC400B60AAB /* Task.swift */,
 				01FCC01D2CE8A97300B60AAB /* TaskResponse.swift */,
+				01FCC0262CE8B81C00B60AAB /* TaskSheet.xcdatamodeld */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -332,6 +339,8 @@
 			isa = PBXGroup;
 			children = (
 				01FCC0182CE8998800B60AAB /* NetworkManager.swift */,
+				01FCC01F2CE8B44500B60AAB /* UserDefaultsManager.swift */,
+				01FCC0212CE8B7B600B60AAB /* CoreDataManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -421,12 +430,14 @@
 				01FA000F2CE66725006DE88F /* AppDelegate.swift in Sources */,
 				01FA002F2CE66F97006DE88F /* Colors.swift in Sources */,
 				01FCBFF42CE750D300B60AAB /* TaskTableViewCell.swift in Sources */,
+				01FCC0282CE8B81C00B60AAB /* TaskSheet.xcdatamodeld in Sources */,
 				01FA00242CE66B62006DE88F /* TasksViewController.swift in Sources */,
 				01FA00222CE66B26006DE88F /* ModuleFactory.swift in Sources */,
 				01FA002C2CE66D1A006DE88F /* TasksRouter.swift in Sources */,
 				01FCC00E2CE7979600B60AAB /* TasksModuleActions.swift in Sources */,
 				01FA002A2CE66CEA006DE88F /* TasksInteractor.swift in Sources */,
 				01FA00282CE66C05006DE88F /* TasksPresenter.swift in Sources */,
+				01FCC0202CE8B44500B60AAB /* UserDefaultsManager.swift in Sources */,
 				01FCC0092CE793E900B60AAB /* TaskPageInteractor.swift in Sources */,
 				01FCBFF72CE76DC400B60AAB /* Task.swift in Sources */,
 				01FA00102CE66725006DE88F /* SceneDelegate.swift in Sources */,
@@ -441,6 +452,7 @@
 				01FA00342CE672C7006DE88F /* LabelNames.swift in Sources */,
 				01FA00262CE66B9F006DE88F /* TasksView.swift in Sources */,
 				01FA00392CE67BED006DE88F /* SearchField.swift in Sources */,
+				01FCC0222CE8B7B600B60AAB /* CoreDataManager.swift in Sources */,
 				01FCC0192CE8998800B60AAB /* NetworkManager.swift in Sources */,
 				01FA00322CE66FDA006DE88F /* UIColor+Extension.swift in Sources */,
 				01FA00362CE67978006DE88F /* Placeholders.swift in Sources */,
@@ -656,6 +668,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		01FCC0262CE8B81C00B60AAB /* TaskSheet.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				01FCC0272CE8B81C00B60AAB /* TaskSheet.xcdatamodel */,
+			);
+			currentVersion = 01FCC0272CE8B81C00B60AAB /* TaskSheet.xcdatamodel */;
+			path = TaskSheet.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 01FAFFE52CE6671D006DE88F /* Project object */;
 }

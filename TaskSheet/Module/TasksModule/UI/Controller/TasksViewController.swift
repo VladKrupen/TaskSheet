@@ -8,7 +8,8 @@
 import UIKit
 
 protocol TasksViewProtocol: AnyObject {
-    
+    func showAlert(error: TaskError)
+    func updateView(tasks: [Task])
 }
 
 final class TasksViewController: UIViewController {
@@ -67,6 +68,16 @@ final class TasksViewController: UIViewController {
         contentView.createTaskButton.addTarget(self, action: #selector(createTaskButtonTapped), for: .touchUpInside)
     }
     
+    //MARK: Alert
+    private func showAlert(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: LabelNames.ok, style: .default)
+        alert.addAction(okAction)
+        DispatchQueue.main.async { [weak self] in
+            self?.present(alert, animated: true)
+        }
+    }
+    
     //MARK: Create contextMenu
     private func createContextMenuConfiguration(task: Task) -> UIContextMenuConfiguration {
         let editAction = UIAction(title: LabelNames.edit, image: .edit) { _ in
@@ -87,11 +98,25 @@ final class TasksViewController: UIViewController {
         }
         return configuration
     }
+    
+    //MARK: UpdateStatusTask
+    private func updateStatusTask(task: Task) {
+        guard let index = tasks.firstIndex(where: { $0.id == task.id }) else { return }
+        tasks[index] = task
+    }
 }
 
 //MARK: TasksViewProtocol
 extension TasksViewController: TasksViewProtocol {
+    func showAlert(error: TaskError) {
+        showAlert(message: error.rawValue)
+    }
     
+    func updateView(tasks: [Task]) {
+        self.tasks = tasks
+        contentView.setTaskCounter(counter: tasks.count)
+        contentView.taskTableView.reloadData()
+    }
 }
 
 //MARK: OBJC
@@ -128,7 +153,7 @@ extension TasksViewController: UITextFieldDelegate {
 //MARK: UITableViewDataSource
 extension TasksViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return tasks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -137,17 +162,17 @@ extension TasksViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         cell.selectionStyle = .none
-        let task = Task(id: "adsdsd", title: "Почитать книгу", description: "Составить список необходимых продуктов для ужина. Не забыть проверить, что уже есть в холодильнике.", completed: true, date: Date())
+        var task = tasks[indexPath.row]
         cell.configureCell(task: task)
-        cell.checkmarkImageViewAction = {
-            cell.isCompleted?.toggle()
+        cell.checkmarkImageViewAction = { [weak self] completed in
+            task.completed = completed
+            self?.updateStatusTask(task: task)
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        let task = Task(id: "adsdsd", title: "Почитать книгу", description: .init(), completed: true, date: Date())
-        return createContextMenuConfiguration(task: task)
+        return createContextMenuConfiguration(task: tasks[indexPath.row])
     }
 }
 

@@ -9,7 +9,7 @@ import UIKit
 
 final class TaskTableViewCell: UITableViewCell {
     
-    var checkmarkImageViewAction: (() -> Void)?
+    var checkmarkImageViewAction: ((Bool) -> Void)?
     
     var isCompleted: Bool? {
         willSet {
@@ -192,7 +192,9 @@ final class TaskTableViewCell: UITableViewCell {
 //MARK: OBJC
 extension TaskTableViewCell {
     @objc private func checkmarkImageViewTapped() {
-        checkmarkImageViewAction?()
+        isCompleted?.toggle()
+        guard let completed = isCompleted else { return }
+        checkmarkImageViewAction?(completed)
     }
 }
 
