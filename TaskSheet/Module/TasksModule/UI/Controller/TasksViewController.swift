@@ -64,6 +64,27 @@ final class TasksViewController: UIViewController {
     private func addTargetForCreateTaskButton() {
         contentView.createTaskButton.addTarget(self, action: #selector(createTaskButtonTapped), for: .touchUpInside)
     }
+    
+    //MARK: Create contextMenu
+    private func createContextMenuConfiguration(task: Task) -> UIContextMenuConfiguration {
+        let editAction = UIAction(title: LabelNames.edit, image: .edit) { _ in
+            
+        }
+        let shareAction = UIAction(title: LabelNames.share, image: .export) { _ in
+            
+        }
+        let deleteAction = UIAction(title: LabelNames.delete, image: .trash, attributes: .destructive) { _ in
+            
+        }
+        let previewProvider: UIContextMenuContentPreviewProvider = {
+            let previewController = PreviewForContextMenuController(task: task)
+            return previewController
+        }
+        let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: previewProvider) { _ in
+            return UIMenu(children: [editAction, shareAction, deleteAction])
+        }
+        return configuration
+    }
 }
 
 //MARK: TasksViewProtocol
@@ -120,6 +141,11 @@ extension TasksViewController: UITableViewDataSource {
             cell.isCompleted?.toggle()
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let task = Task(id: "adsdsd", title: "Почитать книгу", description: .init(), completed: true, date: Date())
+        return createContextMenuConfiguration(task: task)
     }
 }
 

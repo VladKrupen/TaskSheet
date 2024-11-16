@@ -32,6 +32,7 @@
 		01FCC00B2CE793F600B60AAB /* TaskPageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FCC00A2CE793F600B60AAB /* TaskPageRouter.swift */; };
 		01FCC00E2CE7979600B60AAB /* TasksModuleActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FCC00D2CE7979600B60AAB /* TasksModuleActions.swift */; };
 		01FCC0102CE79F3000B60AAB /* BackButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FCC00F2CE79F3000B60AAB /* BackButtonView.swift */; };
+		01FCC0162CE7E21F00B60AAB /* PreviewForContextMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FCC0152CE7E21F00B60AAB /* PreviewForContextMenuController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,7 @@
 		01FCC00A2CE793F600B60AAB /* TaskPageRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPageRouter.swift; sourceTree = "<group>"; };
 		01FCC00D2CE7979600B60AAB /* TasksModuleActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksModuleActions.swift; sourceTree = "<group>"; };
 		01FCC00F2CE79F3000B60AAB /* BackButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButtonView.swift; sourceTree = "<group>"; };
+		01FCC0152CE7E21F00B60AAB /* PreviewForContextMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewForContextMenuController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +212,7 @@
 		01FA00372CE67BDE006DE88F /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				01FCC0152CE7E21F00B60AAB /* PreviewForContextMenuController.swift */,
 				01FA00382CE67BED006DE88F /* SearchField.swift */,
 				01FCC00F2CE79F3000B60AAB /* BackButtonView.swift */,
 			);
@@ -389,6 +392,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01FCC0162CE7E21F00B60AAB /* PreviewForContextMenuController.swift in Sources */,
 				01FA000F2CE66725006DE88F /* AppDelegate.swift in Sources */,
 				01FA002F2CE66F97006DE88F /* Colors.swift in Sources */,
 				01FCBFF42CE750D300B60AAB /* TaskTableViewCell.swift in Sources */,
