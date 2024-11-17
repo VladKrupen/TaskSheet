@@ -53,6 +53,14 @@ final class TasksView: UIView {
         return $0
     }(UITableView())
     
+    private let spinerView: UIActivityIndicatorView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.style = .large
+        $0.color = UIColor(hex: Colors.white)
+        $0.hidesWhenStopped = true
+        return $0
+    }(UIActivityIndicatorView())
+    
     //MARK: Init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -69,6 +77,23 @@ final class TasksView: UIView {
         taskCounterLabel.text = "\(counter) \(LabelNames.tasksForFooter)"
     }
     
+    //MARK: Spiner
+    func showSpiner() {
+        titleLabel.isHidden = true
+        searchField.isHidden = true
+        footerView.isHidden = true
+        taskTableView.isHidden = true
+        spinerView.startAnimating()
+    }
+    
+    func hideSpiner() {
+        titleLabel.isHidden = false
+        searchField.isHidden = false
+        footerView.isHidden = false
+        taskTableView.isHidden = false
+        spinerView.stopAnimating()
+    }
+    
     //MARK: Layout
     private func layoutElements() {
         layoutTitleLabel()
@@ -77,6 +102,7 @@ final class TasksView: UIView {
         layoutCreateTaskButton()
         layoutTaskCounterLabel()
         layoutTableView()
+        layoutSpinerView()
     }
     
     private func layoutTitleLabel() {
@@ -141,6 +167,15 @@ final class TasksView: UIView {
             taskTableView.bottomAnchor.constraint(equalTo: footerView.topAnchor),
             taskTableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             taskTableView.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
+    }
+    
+    private func layoutSpinerView() {
+        addSubview(spinerView)
+        
+        NSLayoutConstraint.activate([
+            spinerView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            spinerView.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
     }
 }

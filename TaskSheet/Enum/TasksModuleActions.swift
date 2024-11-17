@@ -8,5 +8,6 @@
 import Foundation
 
 enum TasksModuleActions {
-    case createTaskButton
+    case createTask
+    case editTask
 }

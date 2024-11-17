@@ -8,9 +8,13 @@
 import Foundation
 
 protocol TaskPageRouterProtocol: AnyObject {
-    
+    func dismissTaskPageModule()
 }
 
 final class TaskPageRouter: TaskPageRouterProtocol {
     weak var viewController: TaskPageViewController?
+    
+    func dismissTaskPageModule() {
+        viewController?.navigationController?.popViewController(animated: true)
+    }
 }

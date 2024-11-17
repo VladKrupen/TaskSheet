@@ -16,7 +16,9 @@ final class ModuleFactory {
         let tasksViewController = TasksViewController()
         let tasksInteractor = TasksInteractor(networkManager: networkManager,
                                               userDefaultsManager: userDefaultsManager,
-                                              coreDataTasks: coreDataManager)
+                                              taskProvider: coreDataManager,
+                                              updatingTask: coreDataManager,
+                                              deletingTask: coreDataManager)
         let tasksRouter = TasksRouter()
         let tasksPresenter = TasksPresenter(view: tasksViewController,
                                             interactor: tasksInteractor,
@@ -30,7 +32,9 @@ final class ModuleFactory {
     static func createTaskPageModule(action: TasksModuleActions, task: Task?) -> TaskPageViewController {
         let taskPageViewController = TaskPageViewController()
         let taskPageInteractor = TaskPageInteractor(action: action,
-                                                    task: task)
+                                                    task: task,
+                                                    creationTask: coreDataManager,
+                                                    updatingTask: coreDataManager)
         let taskPageRouter = TaskPageRouter()
         let taskPagePresenter = TaskPagePresenter(view: taskPageViewController,
                                                   interactor: taskPageInteractor,

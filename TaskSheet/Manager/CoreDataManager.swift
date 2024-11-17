@@ -14,9 +14,21 @@ protocol CoreDataSaving: AnyObject {
     func saveContext() throws
 }
 
-protocol CoreDataTasks: AnyObject {
+protocol CoreDataTaskProvider: AnyObject {
     func createTasks(taskItems: [TaskItem]) -> AnyPublisher<Void, TaskError>
     func fetchTasks() -> AnyPublisher<[Task], TaskError>
+}
+
+protocol CoreDataUpdatingTask: AnyObject {
+    func updateTask(task: Task) -> AnyPublisher<Void, TaskError>
+}
+
+protocol CoreDataCreationTask: AnyObject {
+    func createTask(task: Task) -> AnyPublisher<Void, TaskError>
+}
+
+protocol CoreDataDeletingTask: AnyObject {
+    func deleteTask(task: Task) -> AnyPublisher<Void, TaskError>
 }
 
 final class CoreDataManager {
@@ -43,8 +55,8 @@ extension CoreDataManager: CoreDataSaving {
     }
 }
 
-//MARK: CoreDataTasks
-extension CoreDataManager: CoreDataTasks {
+//MARK: CoreDataTaskProvider
+extension CoreDataManager: CoreDataTaskProvider {
     func createTasks(taskItems: [TaskItem]) -> AnyPublisher<Void, TaskError> {
         return Future<Void, TaskError> { [weak self] promise in
             guard let self else { return }
@@ -86,6 +98,78 @@ extension CoreDataManager: CoreDataTasks {
                                           date: item.date ?? .init()))
                     }
                     promise(.success(tasks))
+                } catch {
+                    promise(.failure(.somethingWentWrong))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+}
+
+//MARK: CoreDataUpdatingTask
+extension CoreDataManager: CoreDataUpdatingTask {
+    func updateTask(task: Task) -> AnyPublisher<Void, TaskError> {
+        return Future<Void, TaskError> { [weak self] promise in
+            guard let self else { return }
+            self.backgroundContext.perform {
+                let fetchRequest = TaskModel.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "id == %@", task.id)
+                do {
+                    let tasksModel = try self.backgroundContext.fetch(fetchRequest)
+                    guard let taskModel = tasksModel.first else { return }
+                    taskModel.title = task.title
+                    taskModel.taskDescription = task.description
+                    taskModel.completed = task.completed
+                    try self.saveContext()
+                    promise(.success(()))
+                } catch {
+                    promise(.failure(.somethingWentWrong))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+}
+
+//MARK: CoreDataCreationTask
+extension CoreDataManager: CoreDataCreationTask {
+    func createTask(task: Task) -> AnyPublisher<Void, TaskError> {
+        return Future<Void, TaskError> { [weak self] promise in
+            guard let self else { return }
+            self.backgroundContext.perform {
+                let taskModel = TaskModel(context: self.backgroundContext)
+                taskModel.id = task.id
+                taskModel.title = task.title
+                taskModel.taskDescription = task.description
+                taskModel.completed = task.completed
+                taskModel.date = task.date
+                do {
+                    try self.saveContext()
+                    promise(.success(()))
+                } catch {
+                    promise(.failure(.somethingWentWrong))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+}
+
+//MARK: CoreDataDeletingTask
+extension CoreDataManager: CoreDataDeletingTask {
+    func deleteTask(task: Task) -> AnyPublisher<Void, TaskError> {
+        return Future<Void, TaskError> { [weak self] promise in
+            guard let self else { return }
+            self.backgroundContext.perform {
+                let fetchRequest = TaskModel.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "id == %@", task.id)
+                do {
+                    let tasksModel = try self.backgroundContext.fetch(fetchRequest)
+                    guard let taskModel = tasksModel.first else { return }
+                    self.backgroundContext.delete(taskModel)
+                    try self.saveContext()
+                    promise(.success(()))
                 } catch {
                     promise(.failure(.somethingWentWrong))
                 }

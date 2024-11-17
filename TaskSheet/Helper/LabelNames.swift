@@ -14,5 +14,4 @@ struct LabelNames {
     static let edit: String = "Редактировать"
     static let share: String = "Поделиться"
     static let delete: String = "Удалить"
-    static let ok: String = "Хорошо"
 }

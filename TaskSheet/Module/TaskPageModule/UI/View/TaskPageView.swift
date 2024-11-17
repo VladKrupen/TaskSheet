@@ -12,7 +12,7 @@ final class TaskPageView: UIView {
     private var lastContentOffset: CGFloat = 0
     
     //MARK: UI
-    private lazy var titleField: UITextField = {
+    lazy var titleField: UITextField = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = .systemFont(ofSize: 34, weight: .bold)
         $0.tintColor = UIColor(hex: Colors.white)
@@ -30,6 +30,7 @@ final class TaskPageView: UIView {
         $0.numberOfLines = 1
         $0.font = .systemFont(ofSize: 16, weight: .regular)
         $0.textColor = UIColor(hex: Colors.white, alpha: 0.5)
+        $0.isHidden = true
         return $0
     }(UILabel())
     
@@ -40,7 +41,7 @@ final class TaskPageView: UIView {
         return $0
     }(UIStackView())
     
-    private lazy var descriptionTextView: UITextView = {
+    lazy var descriptionTextView: UITextView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.textAlignment = .natural
         $0.font = .systemFont(ofSize: 18, weight: .regular)
@@ -69,6 +70,14 @@ final class TaskPageView: UIView {
         NotificationCenter.default.removeObserver(self)
     }
     
+    //MARK: Configure
+    func configureView(task: Task) {
+        dateLabel.isHidden = false
+        titleField.text = task.title
+        setupDescriptionLabel(description: task.description)
+        dateLabel.text = task.date.toCustomFormat()
+    }
+    
     //MARK: Setup
     private func scrollingWhenOpeningKeyboard() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -81,10 +90,12 @@ final class TaskPageView: UIView {
         addGestureRecognizer(panGesture)
     }
     
-    private func formatAndSetDateLabel(date: Date) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yy"
-        dateLabel.text = dateFormatter.string(from: date)
+    private func setupDescriptionLabel(description: String) {
+        guard !description.isEmpty else {
+            descriptionTextView.text = Placeholders.description
+            return
+        }
+        descriptionTextView.text = description
     }
     
     //MARK: Layout
@@ -166,7 +177,7 @@ extension TaskPageView: UITextFieldDelegate {
                 return
             }
             guard !text.trimmingCharacters(in: .whitespaces).isEmpty else {
-                textField.text = ""
+                textField.text = .init()
                 return
             }
             textField.text = text.trimmingCharacters(in: .whitespaces)
@@ -206,7 +217,7 @@ extension TaskPageView: UITextViewDelegate {
                 return
             }
             guard !text.trimmingCharacters(in: .whitespaces).isEmpty else {
-                descriptionTextView.text = ""
+                descriptionTextView.text = .init()
                 return
             }
             descriptionTextView.text = text.trimmingCharacters(in: .whitespaces)

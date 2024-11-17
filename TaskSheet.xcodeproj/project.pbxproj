@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0116B2FB2CEA544100E448F0 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0116B2FA2CEA544100E448F0 /* Date+Extension.swift */; };
+		01F9DBB02CEA44AD00646402 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F9DBAF2CEA44AD00646402 /* Alert.swift */; };
 		01FA000F2CE66725006DE88F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FA00052CE66725006DE88F /* AppDelegate.swift */; };
 		01FA00102CE66725006DE88F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FA000C2CE66725006DE88F /* SceneDelegate.swift */; };
 		01FA00122CE66725006DE88F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01FA00062CE66725006DE88F /* Assets.xcassets */; };
@@ -42,6 +44,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0116B2FA2CEA544100E448F0 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		01F9DBAF2CEA44AD00646402 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		01FA00052CE66725006DE88F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		01FA00062CE66725006DE88F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		01FA00072CE66725006DE88F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -211,6 +215,7 @@
 				01FA00332CE672C7006DE88F /* LabelNames.swift */,
 				01FA00352CE67978006DE88F /* Placeholders.swift */,
 				01FA003A2CE67D29006DE88F /* SystemSymbols.swift */,
+				01F9DBAF2CEA44AD00646402 /* Alert.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -219,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				01FA00312CE66FDA006DE88F /* UIColor+Extension.swift */,
+				0116B2FA2CEA544100E448F0 /* Date+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -447,9 +453,11 @@
 				01FCC00B2CE793F600B60AAB /* TaskPageRouter.swift in Sources */,
 				01FCC0102CE79F3000B60AAB /* BackButtonView.swift in Sources */,
 				01FCC01E2CE8A97300B60AAB /* TaskResponse.swift in Sources */,
+				0116B2FB2CEA544100E448F0 /* Date+Extension.swift in Sources */,
 				01FCC0032CE793AA00B60AAB /* TaskPageViewController.swift in Sources */,
 				01FCC0072CE793D600B60AAB /* TaskPagePresenter.swift in Sources */,
 				01FA00342CE672C7006DE88F /* LabelNames.swift in Sources */,
+				01F9DBB02CEA44AD00646402 /* Alert.swift in Sources */,
 				01FA00262CE66B9F006DE88F /* TasksView.swift in Sources */,
 				01FA00392CE67BED006DE88F /* SearchField.swift in Sources */,
 				01FCC0222CE8B7B600B60AAB /* CoreDataManager.swift in Sources */,
@@ -478,6 +486,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 57V9Y33D2J;
@@ -492,8 +501,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = VladKrupen.by.TaskSheed;
+				PRODUCT_BUNDLE_IDENTIFIER = tms.by.ToDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -505,6 +515,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 57V9Y33D2J;
@@ -519,8 +530,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = VladKrupen.by.TaskSheed;
+				PRODUCT_BUNDLE_IDENTIFIER = tms.by.ToDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -57,7 +57,7 @@ final class TaskTableViewCell: UITableViewCell {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.axis = .vertical
         $0.alignment = .leading
-        $0.spacing = 8
+        $0.spacing = 5
         return $0
     }(UIStackView())
     
@@ -90,7 +90,7 @@ final class TaskTableViewCell: UITableViewCell {
         isCompleted = task.completed
         titleLabel.text = task.title
         setupDescriptionLabel(description: task.description)
-        formatAndSetDateLabel(date: task.date)
+        dateLabel.text = task.date.toCustomFormat()
     }
     
     //MARK: Update
@@ -110,12 +110,6 @@ final class TaskTableViewCell: UITableViewCell {
         }
         descriptionLabel.isHidden = false
         descriptionLabel.text = description
-    }
-    
-    private func formatAndSetDateLabel(date: Date) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yy"
-        dateLabel.text = dateFormatter.string(from: date)
     }
     
     //MARK: Target
@@ -159,7 +153,7 @@ final class TaskTableViewCell: UITableViewCell {
         contentView.addSubview(vStackView)
         
         NSLayoutConstraint.activate([
-            vStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
+            vStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
             vStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
             vStackView.leadingAnchor.constraint(equalTo: checkmarkImageView.trailingAnchor, constant: 5),
             vStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)

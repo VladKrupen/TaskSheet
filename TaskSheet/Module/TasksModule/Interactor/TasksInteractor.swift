@@ -10,22 +10,30 @@ import Combine
 
 protocol TasksInteractorProtocol: AnyObject {
     func fetchTasks()
+    func updateStatusTask(task: Task)
+    func deleteTask(task: Task)
 }
 
 final class TasksInteractor {
     
     private var cancellables: Set<AnyCancellable> = .init()
     private var fetchCancellable: AnyCancellable?
+    private var updateCancellable: AnyCancellable?
+    private var deleteCancellable: AnyCancellable?
     
     weak var presenter: TasksPresenterProtocol?
     private let networkManager: NetworkManagerProtocol
     private let userDefaultsManager: UserDefaultsManagerProtocol
-    private let coreDataTasks: CoreDataTasks
+    private let taskProvider: CoreDataTaskProvider
+    private let updatingTask: CoreDataUpdatingTask
+    private let deletingTask: CoreDataDeletingTask
     
-    init(networkManager: NetworkManagerProtocol, userDefaultsManager: UserDefaultsManagerProtocol, coreDataTasks: CoreDataTasks) {
+    init(networkManager: NetworkManagerProtocol, userDefaultsManager: UserDefaultsManagerProtocol, taskProvider: CoreDataTaskProvider, updatingTask: CoreDataUpdatingTask, deletingTask: CoreDataDeletingTask) {
         self.networkManager = networkManager
         self.userDefaultsManager = userDefaultsManager
-        self.coreDataTasks = coreDataTasks
+        self.taskProvider = taskProvider
+        self.updatingTask = updatingTask
+        self.deletingTask = deletingTask
     }
     
     private func fetchServerTasks() {
@@ -46,7 +54,7 @@ final class TasksInteractor {
     }
     
     private func createLocalTasks(taskItems: [TaskItem]) {
-        coreDataTasks.createTasks(taskItems: taskItems)
+        taskProvider.createTasks(taskItems: taskItems)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 switch completion {
@@ -63,7 +71,7 @@ final class TasksInteractor {
     }
     
     private func fetchLocalTasks() {
-        fetchCancellable = coreDataTasks.fetchTasks()
+        fetchCancellable = taskProvider.fetchTasks()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 switch completion {
@@ -82,5 +90,35 @@ final class TasksInteractor {
 extension TasksInteractor: TasksInteractorProtocol {
     func fetchTasks() {
         userDefaultsManager.hasReceivedTasksFromServer() ? fetchLocalTasks() : fetchServerTasks()
+    }
+    
+    func updateStatusTask(task: Task) {
+        updateCancellable = updatingTask.updateTask(task: task)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] completion in
+                switch completion {
+                case .finished:
+                    return
+                case .failure(let error):
+                    self?.presenter?.displayError(error: error)
+                }
+            }, receiveValue: { [weak self] _ in
+                self?.presenter?.updateStatusTaskForView(task: task)
+            })
+    }
+    
+    func deleteTask(task: Task) {
+        deleteCancellable = deletingTask.deleteTask(task: task)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] completion in
+                switch completion {
+                case .finished:
+                    return
+                case .failure(let error):
+                    self?.presenter?.displayError(error: error)
+                }
+            }, receiveValue: { [weak self] _ in
+                self?.presenter?.deleteTaskForView(task: task)
+            })
     }
 }

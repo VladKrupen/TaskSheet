@@ -8,13 +8,20 @@
 import Foundation
 
 protocol TasksPresenterProtocol: AnyObject {
-    func createTaskButtonWasPressed(action: TasksModuleActions, task: Task?)
-    func viewDidLoaded()
+    //MARK: Router
+    func handleTaskAction(action: TasksModuleActions, task: Task?)
+    //MARK: Interactor
+    func fetchTasks()
+    func updateStatusTask(task: Task)
+    func deleteTask(task: Task)
+    //MARK: View
     func displayError(error: TaskError)
     func updateView(tasks: [Task])
+    func updateStatusTaskForView(task: Task)
+    func deleteTaskForView(task: Task)
 }
 
-final class TasksPresenter: TasksPresenterProtocol {
+final class TasksPresenter {
     
     private weak var view: TasksViewProtocol?
     private let interactor: TasksInteractorProtocol
@@ -25,20 +32,41 @@ final class TasksPresenter: TasksPresenterProtocol {
         self.interactor = interactor
         self.router = router
     }
-    
-    func createTaskButtonWasPressed(action: TasksModuleActions, task: Task?) {
+}
+
+extension TasksPresenter: TasksPresenterProtocol {
+    //MARK: Router
+    func handleTaskAction(action: TasksModuleActions, task: Task?) {
         router.showTaskPageModule(action: action, task: task)
     }
     
-    func viewDidLoaded() {
+    //MARK: Interactor
+    func fetchTasks() {
         interactor.fetchTasks()
     }
     
+    func updateStatusTask(task: Task) {
+        interactor.updateStatusTask(task: task)
+    }
+    
+    func deleteTask(task: Task) {
+        interactor.deleteTask(task: task)
+    }
+    
+    //MARK: View
     func displayError(error: TaskError) {
-        view?.showAlert(error: error)
+        view?.showError(error: error)
     }
     
     func updateView(tasks: [Task]) {
         view?.updateView(tasks: tasks)
+    }
+    
+    func updateStatusTaskForView(task: Task) {
+        view?.updateStatusTask(task: task)
+    }
+    
+    func deleteTaskForView(task: Task) {
+        view?.deleteTask(task: task)
     }
 }
