@@ -89,6 +89,7 @@ final class TasksViewController: UIViewController, UITableViewDelegate {
         }
     }
     
+    //MARK: Activity
     private func showActivity(task: Task) {
         let item: String = task.title + "\n" + task.description + "\n" + task.date.toCustomFormat()
         let activity = UIActivityViewController(activityItems: [item], applicationActivities: nil)
@@ -192,6 +193,7 @@ extension TasksViewController {
         if !isEmptyText {
             contentView.searchField.text = .init()
             contentView.searchField.isEmptyText = true
+            searchText = .init()
             filteredTasks = tasks
             contentView.taskTableView.reloadData()
             contentView.setTaskCounter(counter: filteredTasks.count)
@@ -234,11 +236,10 @@ extension TasksViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         cell.selectionStyle = .none
+        cell.prepareForReuse()
         var task = filteredTasks[indexPath.row]
         cell.configureCell(task: task)
-        if !searchText.isEmpty {
-            cell.highlightText(searchText: searchText)
-        }
+        cell.highlightText(searchText: searchText)
         cell.checkmarkImageViewAction = { [weak self] completed in
             task.completed = completed
             self?.presenter?.updateStatusTask(task: task)

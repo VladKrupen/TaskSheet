@@ -85,6 +85,13 @@ final class TaskTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: PrepareForReuse
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        titleLabel.attributedText = nil
+        descriptionLabel.attributedText = nil
+    }
+    
     //MARK: Configure
     func configureCell(task: Task) {
         isCompleted = task.completed
@@ -94,6 +101,7 @@ final class TaskTableViewCell: UITableViewCell {
     }
     
     func highlightText(searchText: String) {
+        guard !searchText.isEmpty else { return }
         guard let color = UIColor(hex: Colors.yellow) else { return }
         guard let title = titleLabel.text else { return }
         let attributedForTitle = NSMutableAttributedString(string: title)
