@@ -211,11 +211,11 @@
 		01FA002D2CE66F83006DE88F /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				01F9DBAF2CEA44AD00646402 /* Alert.swift */,
 				01FA002E2CE66F97006DE88F /* Colors.swift */,
 				01FA00332CE672C7006DE88F /* LabelNames.swift */,
 				01FA00352CE67978006DE88F /* Placeholders.swift */,
 				01FA003A2CE67D29006DE88F /* SystemSymbols.swift */,
-				01F9DBAF2CEA44AD00646402 /* Alert.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -232,9 +232,9 @@
 		01FA00372CE67BDE006DE88F /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				01FCC00F2CE79F3000B60AAB /* BackButtonView.swift */,
 				01FCC0152CE7E21F00B60AAB /* PreviewForContextMenuController.swift */,
 				01FA00382CE67BED006DE88F /* SearchField.swift */,
-				01FCC00F2CE79F3000B60AAB /* BackButtonView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -344,9 +344,9 @@
 		01FCC0172CE8992E00B60AAB /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				01FCC0212CE8B7B600B60AAB /* CoreDataManager.swift */,
 				01FCC0182CE8998800B60AAB /* NetworkManager.swift */,
 				01FCC01F2CE8B44500B60AAB /* UserDefaultsManager.swift */,
-				01FCC0212CE8B7B600B60AAB /* CoreDataManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -501,7 +501,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = tms.by.ToDo;
+				PRODUCT_BUNDLE_IDENTIFIER = VladKrupen.by.TaskSheet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -530,7 +530,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = tms.by.ToDo;
+				PRODUCT_BUNDLE_IDENTIFIER = VladKrupen.by.TaskSheet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

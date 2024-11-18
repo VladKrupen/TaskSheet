@@ -93,6 +93,20 @@ final class TaskTableViewCell: UITableViewCell {
         dateLabel.text = task.date.toCustomFormat()
     }
     
+    func highlightText(searchText: String) {
+        guard let color = UIColor(hex: Colors.yellow) else { return }
+        guard let title = titleLabel.text else { return }
+        let attributedForTitle = NSMutableAttributedString(string: title)
+        let rangeForTitle = (title as NSString).range(of: searchText, options: .caseInsensitive)
+        attributedForTitle.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: rangeForTitle)
+        titleLabel.attributedText = attributedForTitle
+        guard let description = descriptionLabel.text else { return }
+        let attributedForDescription = NSMutableAttributedString(string: description)
+        let rangeForDescription = (description as NSString).range(of: searchText, options: .caseInsensitive)
+        attributedForDescription.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: rangeForDescription)
+        descriptionLabel.attributedText = attributedForDescription
+    }
+    
     //MARK: Update
     private func updateForCompletionStatus(isCompleted: Bool) {
         checkmarkImageView.image = isCompleted ? UIImage(systemName: SystemSymbols.checkmarkCircle) : UIImage(systemName: SystemSymbols.circle)

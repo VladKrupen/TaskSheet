@@ -78,7 +78,7 @@ final class TasksView: UIView {
     }
     
     //MARK: Spiner
-    func showSpiner() {
+    func showSpinerForFetchTasks() {
         titleLabel.isHidden = true
         searchField.isHidden = true
         footerView.isHidden = true
@@ -86,13 +86,24 @@ final class TasksView: UIView {
         spinerView.startAnimating()
     }
     
-    func hideSpiner() {
+    func hideSpinerForFetchTasks() {
         titleLabel.isHidden = false
         searchField.isHidden = false
         footerView.isHidden = false
         taskTableView.isHidden = false
         spinerView.stopAnimating()
     }
+    
+    func showSpinerForSearch() {
+        taskTableView.isHidden = true
+        spinerView.startAnimating()
+    }
+    
+    func hideSpinerForSearch() {
+        taskTableView.isHidden = false
+        spinerView.stopAnimating()
+    }
+    
     
     //MARK: Layout
     private func layoutElements() {

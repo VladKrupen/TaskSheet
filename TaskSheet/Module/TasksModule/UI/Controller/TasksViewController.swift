@@ -17,6 +17,9 @@ protocol TasksViewProtocol: AnyObject {
 final class TasksViewController: UIViewController, UITableViewDelegate {
     
     private var tasks: [Task] = []
+    private var filteredTasks: [Task] = []
+    private var searchText: String = .init()
+    private var dispatchWorkItem: DispatchWorkItem?
     
     var presenter: TasksPresenterProtocol?
     private let contentView = TasksView()
@@ -36,8 +39,13 @@ final class TasksViewController: UIViewController, UITableViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationController()
-        contentView.showSpiner()
+        contentView.showSpinerForFetchTasks()
         presenter?.fetchTasks()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        contentView.endEditing(true)
     }
     
     //MARK: Setup
@@ -89,6 +97,40 @@ final class TasksViewController: UIViewController, UITableViewDelegate {
         }
     }
     
+    //MARK: Search
+    private func searchTasks() {
+        dispatchWorkItem?.cancel()
+        contentView.showSpinerForSearch()
+        dispatchWorkItem = DispatchWorkItem { [weak self] in
+            guard let self else { return }
+            self.sortTasks()
+            DispatchQueue.main.async {
+                self.contentView.taskTableView.reloadData()
+                self.contentView.setTaskCounter(counter: self.filteredTasks.count)
+                self.contentView.hideSpinerForSearch()
+            }
+        }
+        DispatchQueue.global().asyncAfter(deadline: .now() + 1) { [weak self] in
+            if self?.dispatchWorkItem?.isCancelled == false {
+                self?.dispatchWorkItem?.perform()
+            }
+        }
+    }
+    
+    //MARK: SortTasks
+    private func sortTasks() {
+        let searchString = searchText.lowercased()
+        if !searchString.isEmpty {
+            filteredTasks = tasks.filter { task in
+                let title = task.title.lowercased()
+                let description = task.description.lowercased()
+                return title.contains(searchString) || description.contains(searchString)
+            }
+        } else {
+            filteredTasks = tasks
+        }
+    }
+    
     //MARK: Create contextMenu
     private func createContextMenuConfiguration(task: Task) -> UIContextMenuConfiguration {
         let editAction = UIAction(title: LabelNames.edit, image: .edit) { [weak self] _ in
@@ -119,23 +161,27 @@ extension TasksViewController: TasksViewProtocol {
     
     func updateView(tasks: [Task]) {
         self.tasks = tasks
-        contentView.setTaskCounter(counter: tasks.count)
+        sortTasks()
+        contentView.setTaskCounter(counter: filteredTasks.count)
         contentView.taskTableView.reloadData()
-        contentView.hideSpiner()
+        contentView.hideSpinerForFetchTasks()
     }
     
     func updateStatusTask(task: Task) {
-        guard let index = tasks.firstIndex(where: { $0.id == task.id }) else { return }
-        tasks[index] = task
+        guard let indexTask = tasks.firstIndex(where: { $0.id == task.id }) else { return }
+        guard let indexFilteredTask = filteredTasks.firstIndex(where: { $0.id == task.id }) else { return }
+        tasks[indexTask] = task
+        filteredTasks[indexFilteredTask] = task
         contentView.taskTableView.reloadData()
     }
     
     func deleteTask(task: Task) {
-        guard let index = tasks.firstIndex(where: { $0.id == task.id }) else { return }
-        tasks.remove(at: index)
-        tasks.sort { $0.date > $1.date }
-        contentView.taskTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .top)
-        contentView.setTaskCounter(counter: tasks.count)
+        guard let indexTask = tasks.firstIndex(where: { $0.id == task.id }) else { return }
+        guard let indexFilteredTask = filteredTasks.firstIndex(where: { $0.id == task.id }) else { return }
+        tasks.remove(at: indexTask)
+        filteredTasks.remove(at: indexFilteredTask)
+        contentView.taskTableView.deleteRows(at: [IndexPath(row: indexFilteredTask, section: 0)], with: .top)
+        contentView.setTaskCounter(counter: filteredTasks.count)
     }
 }
 
@@ -146,6 +192,9 @@ extension TasksViewController {
         if !isEmptyText {
             contentView.searchField.text = .init()
             contentView.searchField.isEmptyText = true
+            filteredTasks = tasks
+            contentView.taskTableView.reloadData()
+            contentView.setTaskCounter(counter: filteredTasks.count)
         }
     }
     
@@ -163,6 +212,8 @@ extension TasksViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         guard let text = textField.text else { return }
         contentView.searchField.isEmptyText = text.isEmpty
+        searchText = text
+        searchTasks()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -174,7 +225,7 @@ extension TasksViewController: UITextFieldDelegate {
 //MARK: UITableViewDataSource
 extension TasksViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tasks.count
+        return filteredTasks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -183,8 +234,11 @@ extension TasksViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         cell.selectionStyle = .none
-        var task = tasks[indexPath.row]
+        var task = filteredTasks[indexPath.row]
         cell.configureCell(task: task)
+        if !searchText.isEmpty {
+            cell.highlightText(searchText: searchText)
+        }
         cell.checkmarkImageViewAction = { [weak self] completed in
             task.completed = completed
             self?.presenter?.updateStatusTask(task: task)
@@ -193,6 +247,6 @@ extension TasksViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        return createContextMenuConfiguration(task: tasks[indexPath.row])
+        return createContextMenuConfiguration(task: filteredTasks[indexPath.row])
     }
 }
