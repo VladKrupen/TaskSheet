@@ -35,8 +35,12 @@ final class CoreDataManager {
     private let persistentContainer: NSPersistentContainer
     private let backgroundContext: NSManagedObjectContext
     
-    init() {
-        self.persistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+    init(persistentContainer container: NSPersistentContainer? = nil) {
+        if let container {
+            self.persistentContainer = container
+        } else {
+            self.persistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+        }
         self.backgroundContext = persistentContainer.newBackgroundContext()
         self.backgroundContext.automaticallyMergesChangesFromParent = true
     }
