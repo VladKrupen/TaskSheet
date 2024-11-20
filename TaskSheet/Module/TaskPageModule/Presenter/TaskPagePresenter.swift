@@ -7,13 +7,16 @@
 
 import Foundation
 
-protocol TaskPagePresenterProtocol: AnyObject {
-    //MARK: Router
+protocol TaskPagePresenterRouterProtocol: AnyObject {
     func dismissTaskPageModule()
-    //MARK: Interactor
+}
+
+protocol TaskPagePresenterInteractorProtocol: AnyObject {
     func viewDidLoaded()
     func backButtonViewWasPressed(title: String, description: String)
-    //MARK: View
+}
+
+protocol TaskPagePresenterViewProtocol: AnyObject {
     func updateViewForEditingTask(task: Task)
     func displayError(error: TaskError)
     func notifyValidationFailure(message: String)
@@ -31,14 +34,15 @@ final class TaskPagePresenter {
     }
 }
 
-//MARK: TaskPagePresenterProtocol
-extension TaskPagePresenter: TaskPagePresenterProtocol {
-    //MARK: Router
+//MARK: TaskPagePresenterRouterProtocol
+extension TaskPagePresenter: TaskPagePresenterRouterProtocol {
     func dismissTaskPageModule() {
         router.dismissTaskPageModule()
     }
-    
-    //MARK: Interactor
+}
+
+//MARK: TaskPagePresenterInteractorProtocol
+extension TaskPagePresenter: TaskPagePresenterInteractorProtocol {
     func viewDidLoaded() {
         interactor.viewDidLoaded()
     }
@@ -46,8 +50,10 @@ extension TaskPagePresenter: TaskPagePresenterProtocol {
     func backButtonViewWasPressed(title: String, description: String) {
         interactor.createOrEditTask(title: title, description: description)
     }
-    
-    //MARK: View
+}
+
+//MARK: TaskPagePresenterViewProtocol
+extension TaskPagePresenter: TaskPagePresenterViewProtocol {
     func updateViewForEditingTask(task: Task) {
         view?.updateViewForEditingTask(task: task)
     }

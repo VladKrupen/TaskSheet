@@ -7,14 +7,17 @@
 
 import Foundation
 
-protocol TasksPresenterProtocol: AnyObject {
-    //MARK: Router
+protocol TasksPresenterRouterProtocol: AnyObject {
     func handleTaskAction(action: TasksModuleActions, task: Task?)
-    //MARK: Interactor
+}
+
+protocol TasksPresenterInteractorProtocol: AnyObject {
     func fetchTasks()
     func updateStatusTask(task: Task)
     func deleteTask(task: Task)
-    //MARK: View
+}
+
+protocol TasksPresenterViewProtocol: AnyObject {
     func displayError(error: TaskError)
     func updateView(tasks: [Task])
     func updateStatusTaskForView(task: Task)
@@ -34,13 +37,15 @@ final class TasksPresenter {
     }
 }
 
-extension TasksPresenter: TasksPresenterProtocol {
-    //MARK: Router
+//MARK: TasksPresenterRouterProtocol
+extension TasksPresenter: TasksPresenterRouterProtocol {
     func handleTaskAction(action: TasksModuleActions, task: Task?) {
         router.showTaskPageModule(action: action, task: task)
     }
-    
-    //MARK: Interactor
+}
+
+//MARK: TasksPresenterInteractorProtocol
+extension TasksPresenter: TasksPresenterInteractorProtocol {
     func fetchTasks() {
         interactor.fetchTasks()
     }
@@ -52,8 +57,10 @@ extension TasksPresenter: TasksPresenterProtocol {
     func deleteTask(task: Task) {
         interactor.deleteTask(task: task)
     }
-    
-    //MARK: View
+}
+
+//MARK: TasksPresenterViewProtocol
+extension TasksPresenter: TasksPresenterViewProtocol {
     func displayError(error: TaskError) {
         view?.showError(error: error)
     }

@@ -12,6 +12,8 @@
 		0194E64D2CECB2680020256B /* CoreDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0194E64C2CECB2680020256B /* CoreDataManagerTests.swift */; };
 		0194E6582CECE96F0020256B /* TaskPagePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0194E6572CECE96F0020256B /* TaskPagePresenterTests.swift */; };
 		0194E65A2CECF34A0020256B /* TasksPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0194E6592CECF34A0020256B /* TasksPresenterTests.swift */; };
+		01C894192CED838E00749B1F /* TaskPageInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C894182CED838E00749B1F /* TaskPageInteractorTests.swift */; };
+		01C8941B2CEDA42800749B1F /* TasksInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C8941A2CEDA42800749B1F /* TasksInteractorTests.swift */; };
 		01F9DBB02CEA44AD00646402 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F9DBAF2CEA44AD00646402 /* Alert.swift */; };
 		01FA000F2CE66725006DE88F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FA00052CE66725006DE88F /* AppDelegate.swift */; };
 		01FA00102CE66725006DE88F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FA000C2CE66725006DE88F /* SceneDelegate.swift */; };
@@ -64,6 +66,8 @@
 		0194E64C2CECB2680020256B /* CoreDataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManagerTests.swift; sourceTree = "<group>"; };
 		0194E6572CECE96F0020256B /* TaskPagePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPagePresenterTests.swift; sourceTree = "<group>"; };
 		0194E6592CECF34A0020256B /* TasksPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksPresenterTests.swift; sourceTree = "<group>"; };
+		01C894182CED838E00749B1F /* TaskPageInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPageInteractorTests.swift; sourceTree = "<group>"; };
+		01C8941A2CEDA42800749B1F /* TasksInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksInteractorTests.swift; sourceTree = "<group>"; };
 		01F9DBAF2CEA44AD00646402 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		01FA00052CE66725006DE88F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		01FA00062CE66725006DE88F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -126,6 +130,8 @@
 				0194E64C2CECB2680020256B /* CoreDataManagerTests.swift */,
 				0194E6572CECE96F0020256B /* TaskPagePresenterTests.swift */,
 				0194E6592CECF34A0020256B /* TasksPresenterTests.swift */,
+				01C894182CED838E00749B1F /* TaskPageInteractorTests.swift */,
+				01C8941A2CEDA42800749B1F /* TasksInteractorTests.swift */,
 			);
 			path = TaskSheetTests;
 			sourceTree = "<group>";
@@ -506,6 +512,8 @@
 			files = (
 				0194E64D2CECB2680020256B /* CoreDataManagerTests.swift in Sources */,
 				0194E65A2CECF34A0020256B /* TasksPresenterTests.swift in Sources */,
+				01C894192CED838E00749B1F /* TaskPageInteractorTests.swift in Sources */,
+				01C8941B2CEDA42800749B1F /* TasksInteractorTests.swift in Sources */,
 				0194E64B2CECAC4A0020256B /* NetworkManagerTests.swift in Sources */,
 				0194E6582CECE96F0020256B /* TaskPagePresenterTests.swift in Sources */,
 			);

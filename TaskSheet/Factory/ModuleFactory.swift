@@ -23,8 +23,9 @@ final class ModuleFactory {
         let tasksPresenter = TasksPresenter(view: tasksViewController,
                                             interactor: tasksInteractor,
                                             router: tasksRouter)
-        tasksViewController.presenter = tasksPresenter
-        tasksInteractor.presenter = tasksPresenter
+        tasksViewController.presenterToRouter = tasksPresenter
+        tasksViewController.presenterToInteractor = tasksPresenter
+        tasksInteractor.presenterToView = tasksPresenter
         tasksRouter.viewController = tasksViewController
         return tasksViewController
     }
@@ -39,8 +40,10 @@ final class ModuleFactory {
         let taskPagePresenter = TaskPagePresenter(view: taskPageViewController,
                                                   interactor: taskPageInteractor,
                                                   router: taskPageRouter)
-        taskPageViewController.presenter = taskPagePresenter
-        taskPageInteractor.presenter = taskPagePresenter
+        taskPageViewController.presenterToInteractor = taskPagePresenter
+        taskPageViewController.presenterToRouter = taskPagePresenter
+        taskPageInteractor.presenterToRouter = taskPagePresenter
+        taskPageInteractor.presenterToView = taskPagePresenter
         taskPageRouter.viewController = taskPageViewController
         return taskPageViewController
     }

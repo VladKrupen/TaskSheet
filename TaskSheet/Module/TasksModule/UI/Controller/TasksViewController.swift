@@ -21,7 +21,8 @@ final class TasksViewController: UIViewController, UITableViewDelegate {
     private var searchText: String = .init()
     private var dispatchWorkItem: DispatchWorkItem?
     
-    var presenter: TasksPresenterProtocol?
+    var presenterToRouter: TasksPresenterRouterProtocol?
+    var presenterToInteractor: TasksPresenterInteractorProtocol?
     private let contentView = TasksView()
     
     //MARK: Life cycle
@@ -40,7 +41,7 @@ final class TasksViewController: UIViewController, UITableViewDelegate {
         super.viewWillAppear(animated)
         setupNavigationController()
         contentView.showSpinerForFetchTasks()
-        presenter?.fetchTasks()
+        presenterToInteractor?.fetchTasks()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -135,13 +136,13 @@ final class TasksViewController: UIViewController, UITableViewDelegate {
     //MARK: Create contextMenu
     private func createContextMenuConfiguration(task: Task) -> UIContextMenuConfiguration {
         let editAction = UIAction(title: LabelNames.edit, image: .edit) { [weak self] _ in
-            self?.presenter?.handleTaskAction(action: .editTask, task: task)
+            self?.presenterToRouter?.handleTaskAction(action: .editTask, task: task)
         }
         let shareAction = UIAction(title: LabelNames.share, image: .export) { [weak self] _ in
             self?.showActivity(task: task)
         }
         let deleteAction = UIAction(title: LabelNames.delete, image: .trash, attributes: .destructive) { [weak self] _ in
-            self?.presenter?.deleteTask(task: task)
+            self?.presenterToInteractor?.deleteTask(task: task)
         }
         let previewProvider: UIContextMenuContentPreviewProvider = {
             let previewController = PreviewForContextMenuController(task: task)
@@ -205,7 +206,7 @@ extension TasksViewController {
     }
     
     @objc private func createTaskButtonTapped() {
-        presenter?.handleTaskAction(action: .createTask, task: nil)
+        presenterToRouter?.handleTaskAction(action: .createTask, task: nil)
     }
 }
 
@@ -242,7 +243,7 @@ extension TasksViewController: UITableViewDataSource {
         cell.highlightText(searchText: searchText)
         cell.checkmarkImageViewAction = { [weak self] completed in
             task.completed = completed
-            self?.presenter?.updateStatusTask(task: task)
+            self?.presenterToInteractor?.updateStatusTask(task: task)
         }
         return cell
     }

@@ -21,7 +21,7 @@ final class TasksInteractor {
     private var updateCancellable: AnyCancellable?
     private var deleteCancellable: AnyCancellable?
     
-    weak var presenter: TasksPresenterProtocol?
+    weak var presenterToView: TasksPresenterViewProtocol?
     private let networkManager: NetworkManagerProtocol
     private let userDefaultsManager: UserDefaultsManagerProtocol
     private let taskProvider: CoreDataTaskProvider
@@ -44,7 +44,7 @@ final class TasksInteractor {
                 case .finished:
                     return
                 case .failure(let error):
-                    self?.presenter?.displayError(error: error)
+                    self?.presenterToView?.displayError(error: error)
                     self?.fetchLocalTasks()
                 }
             } receiveValue: { [weak self] taskItems in
@@ -61,7 +61,7 @@ final class TasksInteractor {
                 case .finished:
                     return
                 case .failure(let error):
-                    self?.presenter?.displayError(error: error)
+                    self?.presenterToView?.displayError(error: error)
                 }
             } receiveValue: { [weak self] _ in
                 self?.fetchLocalTasks()
@@ -78,10 +78,10 @@ final class TasksInteractor {
                 case .finished:
                     return
                 case .failure(let error):
-                    self?.presenter?.displayError(error: error)
+                    self?.presenterToView?.displayError(error: error)
                 }
             } receiveValue: { [weak self] tasks in
-                self?.presenter?.updateView(tasks: tasks)
+                self?.presenterToView?.updateView(tasks: tasks)
             }
     }
 }
@@ -100,10 +100,10 @@ extension TasksInteractor: TasksInteractorProtocol {
                 case .finished:
                     return
                 case .failure(let error):
-                    self?.presenter?.displayError(error: error)
+                    self?.presenterToView?.displayError(error: error)
                 }
             }, receiveValue: { [weak self] _ in
-                self?.presenter?.updateStatusTaskForView(task: task)
+                self?.presenterToView?.updateStatusTaskForView(task: task)
             })
     }
     
@@ -115,10 +115,10 @@ extension TasksInteractor: TasksInteractorProtocol {
                 case .finished:
                     return
                 case .failure(let error):
-                    self?.presenter?.displayError(error: error)
+                    self?.presenterToView?.displayError(error: error)
                 }
             }, receiveValue: { [weak self] _ in
-                self?.presenter?.deleteTaskForView(task: task)
+                self?.presenterToView?.deleteTaskForView(task: task)
             })
     }
 }

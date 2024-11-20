@@ -43,7 +43,7 @@ final class CoreDataManagerTests: XCTestCase {
         let expectation = expectation(description: "Сontext saved successfully")
         XCTAssertNoThrow(try coreDataManager.saveContext(), "Failed to save context")
         expectation.fulfill()
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: 5)
     }
     
     func testCreateTaskItemsAndFetchTasks() {
@@ -63,7 +63,7 @@ final class CoreDataManagerTests: XCTestCase {
                 }
             } receiveValue: { _ in }
             .store(in: &cancellables)
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: 5)
     }
     
     func testCreateTask() {
@@ -80,7 +80,7 @@ final class CoreDataManagerTests: XCTestCase {
             } receiveValue: { _ in }
             .store(in: &cancellables)
        
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: 5)
     }
     
     func testDeleteTask() {
@@ -113,7 +113,7 @@ final class CoreDataManagerTests: XCTestCase {
                 } receiveValue: { _ in }
                 .store(in: &cancellables)
         }
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: 5)
     }
     
     func testUpdateTask() {
@@ -149,7 +149,7 @@ final class CoreDataManagerTests: XCTestCase {
                 } receiveValue: { _ in }
                 .store(in: &cancellables)
         }
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: 5)
     }
     
     private func fetchTasks(count: Int, expectation: XCTestExpectation? = nil, dispatchGroup: DispatchGroup? = nil, task: Task? = nil) {

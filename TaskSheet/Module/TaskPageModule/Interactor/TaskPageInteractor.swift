@@ -16,7 +16,8 @@ protocol TaskPageInteractorProtocol: AnyObject {
 final class TaskPageInteractor {
     private var cancellables: Set<AnyCancellable> = .init()
     
-    weak var presenter: TaskPagePresenterProtocol?
+    weak var presenterToRouter: TaskPagePresenterRouterProtocol?
+    weak var presenterToView: TaskPagePresenterViewProtocol?
     private let action: TasksModuleActions
     private var task: Task?
     private let creationTask: CoreDataCreationTask
@@ -31,7 +32,7 @@ final class TaskPageInteractor {
     
     private func createTask(title: String, description: String) {
         guard !title.isEmpty else {
-            presenter?.notifyValidationFailure(message: Alert.emptyTitleMessage)
+            presenterToView?.notifyValidationFailure(message: Alert.emptyTitleMessage)
             return
         }
         let newTask = Task(id: UUID().uuidString,
@@ -46,21 +47,21 @@ final class TaskPageInteractor {
                 case .finished:
                     return
                 case .failure(let error):
-                    self?.presenter?.displayError(error: error)
+                    self?.presenterToView?.displayError(error: error)
                 }
             } receiveValue: { [weak self] _ in
-                self?.presenter?.dismissTaskPageModule()
+                self?.presenterToRouter?.dismissTaskPageModule()
             }
             .store(in: &cancellables)
     }
     
     private func editTask(title: String, description: String) {
         guard !title.isEmpty else {
-            presenter?.notifyValidationFailure(message: Alert.emptyTitleMessage)
+            presenterToView?.notifyValidationFailure(message: Alert.emptyTitleMessage)
             return
         }
         guard let task else {
-            presenter?.displayError(error: .somethingWentWrong)
+            presenterToView?.displayError(error: .somethingWentWrong)
             return
         }
         let updatedTask = Task(id: task.id,
@@ -75,10 +76,10 @@ final class TaskPageInteractor {
                 case .finished:
                     return
                 case .failure(let error):
-                    self?.presenter?.displayError(error: error)
+                    self?.presenterToView?.displayError(error: error)
                 }
             } receiveValue: { [weak self] _ in
-                self?.presenter?.dismissTaskPageModule()
+                self?.presenterToRouter?.dismissTaskPageModule()
             }
             .store(in: &cancellables)
     }
@@ -92,7 +93,7 @@ extension TaskPageInteractor: TaskPageInteractorProtocol {
             return
         case .editTask:
             guard let task else { return }
-            presenter?.updateViewForEditingTask(task: task)
+            presenterToView?.updateViewForEditingTask(task: task)
         }
     }
     

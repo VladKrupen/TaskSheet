@@ -15,7 +15,8 @@ protocol TaskPageViewProtocol: AnyObject {
 
 final class TaskPageViewController: UIViewController {
     
-    var presenter: TaskPagePresenterProtocol?
+    var presenterToInteractor: TaskPagePresenterInteractorProtocol?
+    var presenterToRouter: TaskPagePresenterRouterProtocol?
     private let contentView = TaskPageView()
     
     private let backButtonView = BackButtonView()
@@ -29,7 +30,7 @@ final class TaskPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationController()
-        presenter?.viewDidLoaded()
+        presenterToInteractor?.viewDidLoaded()
     }
     
     //MARK: Get
@@ -61,7 +62,7 @@ final class TaskPageViewController: UIViewController {
     private func showErrorAlert(message: String) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: Alert.ok, style: .default) { [weak self] _ in
-            self?.presenter?.dismissTaskPageModule()
+            self?.presenterToRouter?.dismissTaskPageModule()
         }
         alert.addAction(okAction)
         DispatchQueue.main.async { [weak self] in
@@ -73,7 +74,7 @@ final class TaskPageViewController: UIViewController {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: Alert.ok, style: .default)
         let cancelAndExitAction = UIAlertAction(title: Alert.cancelAndExit, style: .destructive) { [weak self] _ in
-            self?.presenter?.dismissTaskPageModule()
+            self?.presenterToRouter?.dismissTaskPageModule()
         }
         [okAction, cancelAndExitAction].forEach { alert.addAction($0) }
         DispatchQueue.main.async { [weak self] in
@@ -105,7 +106,7 @@ extension TaskPageViewController {
         }) { [weak self] _ in
             guard let self else { return }
             self.contentView.endEditing(true)
-            self.presenter?.backButtonViewWasPressed(title: self.getTitle(), description: self.getDescription())
+            self.presenterToInteractor?.backButtonViewWasPressed(title: self.getTitle(), description: self.getDescription())
             UIView.animate(withDuration: 0.1) {
                 self.backButtonView.transform = .identity
             }
